@@ -115,7 +115,7 @@ def writeCommandBit(writer, flag, bytes):
     if flag:
         writer['control'] = writer['control'] | 0x80
         
-    writer['buffer'].append(bytes.copy())
+    writer['buffer'].extend(bytes)
     
     writer['bits'] = writer['bits'] - 1
     if writer['bits'] != 0:
@@ -123,7 +123,7 @@ def writeCommandBit(writer, flag, bytes):
     
     writer['bits'] = 8
     writer['output'].append(writer['control'])
-    writer['output'].append(writer['buffer'].copy())
+    writer['output'].extend(writer['buffer'])
     writer['buffer'] = []
     writer['control'] = 0
     
@@ -156,7 +156,7 @@ def encodeTokens(tokens):
                     writeCommandBit(writer, False, [data])
             else:
                 writeCommandBit(writer, True, [0xB8 + len(token['data']), 
-                                               list(token['data'])])
+                                               *token['data']])
         else:
             raise Exception('Tokenizer Error')
     
