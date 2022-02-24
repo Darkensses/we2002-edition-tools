@@ -1,4 +1,4 @@
-import sys
+from ctypes import c_uint8 as uint8, c_uint16 as uint16
 import argparse
 
 TOKEN_TYPE = {
@@ -185,8 +185,18 @@ if __name__ == "__main__":
     buffer = list(file.read())
     file.close()
 
-    #Hard-coded for now
-    CLUT_SIZE = 536
+    #Read 2 bytes from buffer, cast them to hex, concatenates them
+    #and casts back to int
+    #i.e buffer[8] = 0C and buffer[9] = 02, so result is 0C02
+    #0C02 = 3074
+    clut_bytes = int("%02X%02X"%(buffer[8], buffer[9]), 16)
+    
+    #cast int to uint16, and save the values to bytes on little endian
+    clut_bytes = uint16(clut_bytes).value.to_bytes(2, 'little')
+    
+    #reads the bytes as big endian
+    clut_bytes = int.from_bytes(clut_bytes,'big')
+    CLUT_SIZE = clut_bytes + 12
     
     buffer_slice = buffer[8 + CLUT_SIZE:]
 
@@ -195,4 +205,3 @@ if __name__ == "__main__":
     encoding = encodeTokens(tokens)
     
     print(*encoding)
-    
