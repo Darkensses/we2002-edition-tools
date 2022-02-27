@@ -168,6 +168,17 @@ def encodeTokens(tokens):
     
     return writer['output']
 
+
+
+
+def saveFile(data):
+    archivo = open ('compress.bin', 'wb')
+    
+    for byte in data:
+        archivo.write(bytes((byte,)))
+    archivo.close()
+
+
 if __name__ == "__main__":
     
     global buffer
@@ -201,7 +212,16 @@ if __name__ == "__main__":
     buffer_slice = buffer[8 + CLUT_SIZE:]
 
     tokens = getTokens()
-
+    
+    #list with int values
     encoding = encodeTokens(tokens)
     
-    print(*encoding)
+    #print(*encoding)
+    
+    encoding_uint8 = list(map(uint8, encoding))
+    
+    encoding_uint8 = [i.value for i in encoding_uint8]
+    
+    #print(*encoding_uint8)   
+    saveFile(encoding_uint8)
+    
