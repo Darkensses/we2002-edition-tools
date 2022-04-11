@@ -1,10 +1,15 @@
+// DON'T FORGET TO ADD THIS IF YOU'RE USING CODE FROM HERE:
+// Author: MexWE
+// Special Thanks: SaxxonPike
+// Dev: Jasiel Guillen
+
 // this LZ variant is used for compressing many types of data, it seems to be
 // a Konami standard format since at least 1994 if not back furthe
 
 const BUFFER_MASK = 0x3FF; // 10 bits window
 const BUFFER_SIZE = 0x400;
 
-export function decompress(buffer) {
+function decompress(buffer) {
     let writer = [];
     let bufferAux = new Uint8Array(BUFFER_SIZE);
     let bufferOffset = 0;
@@ -77,8 +82,8 @@ export function decompress(buffer) {
             length--;
         }
     }
-
-    console.log(Uint8Array.from(writer));
+    
+    return writer;
 }
 
 function getHeaderClut(buffer) {
@@ -109,4 +114,30 @@ function getHeaderClut(buffer) {
             }
         }
     }
+}
+
+function getLocalTIM(texFile) {
+    let buffer = new DataView(texFile.buffer);
+    let offset_bin = buffer.getUint16(0,true);
+    let offset_clut_header = buffer.getUint16(4,true);
+
+    let info_grap = [0x0C, 0x40, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x40, 0x00, 0x80, 0x00];
+    let decompress_grap = decompress(texFile.slice(buffer.getUint16(offset_bin + 12, true), offset_bin)); 
+    //console.log(decompress_grap)   
+    
+    //console.log(offset_bin - buffer.getUint16(offset_bin + 12, true)) // Size
+
+    let tim_file = [
+        ...[0x10, 0x00, 0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x0C, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00],
+        ...texFile.slice(buffer.getUint16(offset_clut_header + 12, true), offset_clut_header),
+        ...info_grap, 
+        ...decompress_grap
+    ];
+    
+    console.log(Uint8Array.from(tim_file));
+    return tim_file;
+}
+
+export function decompressTex(texFile) {
+    return getLocalTIM(texFile);
 }
