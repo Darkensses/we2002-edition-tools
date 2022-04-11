@@ -1,3 +1,7 @@
+// DON'T FORGET TO ADD THIS IF YOU'RE USING CODE FROM HERE:
+// Author: MexWE
+// Dev: Jasiel Guillen
+
 const TOKEN_TYPE = Object.freeze({
     UNASSIGNED: -1,
     RAW: 3,
