@@ -133,10 +133,10 @@ function getHeaderClut(buffer) {
     }
 }
 
-function getLocalTIM(texFile) {
+function getTIM(texFile, offBin, offClutHeader) {
     let buffer = new DataView(texFile.buffer);
-    let offset_bin = buffer.getUint16(0,true);
-    let offset_clut_header = buffer.getUint16(4,true);
+    let offset_bin = buffer.getUint16(offBin,true);
+    let offset_clut_header = buffer.getUint16(offClutHeader,true);
 
     let info_grap = [0x0C, 0x40, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x40, 0x00, 0x80, 0x00];
     let decompress_grap = decompress(texFile.slice(buffer.getUint16(offset_bin + 12, true), offset_bin)); 
@@ -151,10 +151,17 @@ function getLocalTIM(texFile) {
         ...decompress_grap
     ];
     
-    console.log(Uint8Array.from(tim_file));
+    //console.log(Uint8Array.from(tim_file));
     return tim_file;
 }
 
 export function decompressTex(texFile) {
-    return getLocalTIM(texFile);
+    let files = [];
+    files.push({name: "1-1.tim", file:getTIM(texFile, 0, 4)});
+    files.push({name: "2-1.tim", file:getTIM(texFile, 8, 12)});
+    files.push({name: "1-2.tim", file:getTIM(texFile, 36, 16)});
+    files.push({name: "2-2.tim", file:getTIM(texFile, 40, 20)});
+    files.push({name: "flag.tim", file:getTIM(texFile, 28, 32)});
+
+    return files;
 }
