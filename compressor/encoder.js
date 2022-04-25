@@ -1,6 +1,20 @@
-// DON'T FORGET TO ADD THIS IF YOU'RE USING CODE FROM HERE:
-// Author: MexWE
-// Dev: Jasiel Guillen
+/**
+ * MEXWE
+ * https://www.facebook.com/MexWEdition
+ * 
+ * @author Jasiel Guillen
+ * https://github.com/Darkensses
+ * 
+ * @author David Laborico
+ * https://github.com/Laborico
+ * 
+ * Special thanks to SaxxonPike who reverse-engineered the code
+ * from BeatMania and ported it to C#
+ * Check their repos and suport them!
+ * 
+ * https://github.com/SaxxonPike/
+ * https://github.com/SaxxonPike/RhythmCodex/blob/master/Source/RhythmCodex.Lib/Compression/BemaniLzEncoder.cs
+ */
 
 const TOKEN_TYPE = Object.freeze({
     UNASSIGNED: -1,

@@ -1,10 +1,27 @@
-// DON'T FORGET TO ADD THIS IF YOU'RE USING CODE FROM HERE:
-// Author: MexWE
-// Special Thanks: SaxxonPike
-// Dev: Jasiel Guillen
+/**
+ * MEXWE
+ * https://www.facebook.com/MexWEdition
+ * 
+ * @author Jasiel Guillen
+ * https://github.com/Darkensses
+ * 
+ * @author David Laborico
+ * https://github.com/Laborico
+ * 
+ * Special thanks to SaxxonPike who reverse-engineered the code
+ * from BeatMania and ported it to C#
+ * Check their repos and suport them!
+ * 
+ * https://github.com/SaxxonPike/
+ * https://github.com/SaxxonPike/scharfrichter/blob/master/Scharfrichter/Compression/BemaniLZ.cs
+ */
 
 // this LZ variant is used for compressing many types of data, it seems to be
-// a Konami standard format since at least 1994 if not back furthe
+// a Konami standard format since at least 1994 if not back furthe.
+
+// The decompress algorithm IS in the game.
+// You can decompile it using Ghidra and the ghidra_psx_ldr plugin,
+// the function should be in SLPM_870.56 at line ~7408
 
 const BUFFER_MASK = 0x3FF; // 10 bits window
 const BUFFER_SIZE = 0x400;

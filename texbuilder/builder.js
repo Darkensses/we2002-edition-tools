@@ -1,6 +1,14 @@
-// DON'T FORGET TO ADD THIS IF YOU'RE USING CODE FROM HERE:
-// Author: MexWE
-// Dev: Jasiel Guillen
+/**
+ * MEXWE
+ * https://www.facebook.com/MexWEdition
+ * 
+ * @author Jasiel Guillen
+ * https://github.com/Darkensses
+ * 
+ * @author David Laborico
+ * https://github.com/Laborico
+ * 
+ */
 
 const SEPARATOR = 0x800F // hexeditor: 0F 80
 const MAIN_HEADER_SIZE = 48; // The Main Header sized 48 bytes length.
